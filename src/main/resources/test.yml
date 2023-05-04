@@ -1,0 +1,13 @@
+sharding:
+  tables:
+    user:
+      actualDataNodes: ds${0..1}.user${0..1}
+      tableStrategy:
+        standard:
+          shardingColumn: tenant_id
+          shardingAlgorithmName: tenantShardingAlgorithm
+  shardingAlgorithms:
+    tenantShardingAlgorithm:
+      type: INLINE
+      props:
+        algorithm-expression: user${tenant_id % 2}
